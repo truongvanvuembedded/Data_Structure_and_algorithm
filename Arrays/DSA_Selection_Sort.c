@@ -6,6 +6,7 @@ int main()
     int *arr = NULL;
     int index = 0;
     int input;
+    int *temp_value = NULL;
 
     printf("\nType the element number of array");
     printf("\nType negative number to end array");
@@ -36,35 +37,32 @@ int main()
     {
         printf("%d, ", arr[i]);
     }
-    
 
-    // Outer loop that controls how many times the inner loop must run.
-    // Why (j < index - 1?)
-    // Because each loop -> the lagest value is pull to last position 
-    // So, for 5 index in arrays -> Loop need 4 loop 
     for (int j = 0; j < index - 1; j++)
     {
-        // Inner loop that control how many element of array is loop.
-        // Why (i < index - j - 1) 
-        // Because -1. Same the outer loop
-        // -j Because. After each loop, the lagest value is moved to right position. 
-        // So, don't need check it
-        for (int i = 0; i < index - j - 1; i++)
+        for (int i = 0; i < (index - 1 - j); i++)
         {
             if (arr[i] > arr[i+1])
             {
-                arr[i] = arr[i] + arr[i+1];
-                arr[i+1] = arr[i] - arr[i+1];
-                arr[i] = arr[i] - arr[i+1];
+                temp_value = &arr[i+1];
             }
         }
-    }  
+        if (temp_value != NULL)
+        {
+            *temp_value = arr[j] + *temp_value;
+            arr[j] = *temp_value - arr[j];
+            *temp_value = *temp_value - arr[j];
+        }
+                
+    }
 
     printf("\nArray from the lowest value to the highest value: ");
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index - 1; i++)
     {
         printf("%d, ", arr[i]);
     }
     
     return 0;
 }
+
+
